@@ -22,7 +22,7 @@ sudo systemctl start redis-server
 sudo systemctl stop redis-server
 
 github
-git remote set-url origin https://github.com/siyamak1981/Meeting.git
+git remote set-url origin https://github.com/siyamak1981/Meeting-Django.git
 
 timectl
 imedatectl set-time 03:13:01
