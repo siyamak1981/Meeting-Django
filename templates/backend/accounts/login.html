@@ -1,0 +1,69 @@
+{% extends "backend/layouts/base-fullscreen.html" %}
+
+{% block title %} Sign IN {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <main>
+        <section class="vh-lg-100 mt-5 mt-lg-0 bg-soft d-flex align-items-center">
+            <div class="container">
+                <p class="text-center">
+                    Open-source Django Dashboard
+                </p>
+                <div class="row justify-content-center form-bg-image" data-background-lg="/static/assets/img/illustrations/signin.svg">
+                    <div class="col-12 d-flex align-items-center justify-content-center">
+                        <div class="bg-white shadow border-0 rounded border-light p-4 p-lg-5 w-100 fmxw-500">
+                            <div class="text-center text-md-center mb-4 mt-md-0">
+                                <h1 class="mb-0 h3">
+                                    Django Volt - Sign IN
+                                </h1>
+                                <br />
+                                <p>
+                                    {% if msg %}
+                                        {{ msg | safe }}
+                                    {% else %}
+                                        Add your credentials
+                                    {% endif %}                                     
+                                </p> 
+                            </div>
+                            <form method="post" action="" class="mt-4" novalidate>
+                                {% csrf_token %} 
+                                {% include 'backend/includes/form.html' %}
+                            
+                                <div class="d-grid mt-4">
+                                    <button type="submit" name="login" class="btn btn-gray-800">Sign IN</button>
+                                </div>
+                                <div class="d-grid mt-4">
+                                  <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn btn-danger btn-sm">GOOGLE+</a>
+                                </div>
+                                    
+                            </form>
+                            <br />
+                  
+
+                            <div class="d-flex justify-content-center align-items-center mt-4">
+                                <span class="fw-normal">
+                                    Not registered?
+                                    <a href="{% url 'accounts:signup' %}" class="fw-bold">Create account</a>
+                                </span>
+                            </div>
+                            <div class="text-center py-2">
+                                <small>
+                              <a href="{% url "password_reset" %}" class="text-muted">Forgot your password?</a>
+                            </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+    </main>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

@@ -1,0 +1,723 @@
+{% extends 'frontend/shared/home.html' %} {% load static %}
+{% block styles %}
+{% endblock %}
+{% block title %}Landing
+{% endblock title %}
+{% block body %}
+
+<section class="section main-banner" id="top" data-section="section1">
+  <video autoplay muted loop id="bg-video">
+    <source src="{% static 'assets/images/course-video.mp4' %}" type="video/mp4" />
+  </video>
+
+  <div class="video-overlay header-text">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="caption">
+            <h6>Hello Students</h6>
+            <h2>Welcome to Education</h2>
+            <p>
+              This is an edu meeting HTML CSS template provided by
+              <a
+                rel="nofollow"
+                href="https://templatemo.com/page/1"
+                target="_blank"
+                >TemplateMo website</a
+              >. This is a Bootstrap v5.1.3 layout. The video background is
+              taken from Pexels website, a group of young people by
+              <a
+                rel="nofollow"
+                href="https://www.pexels.com/@pressmaster"
+                target="_blank"
+                >Pressmaster</a
+              >.
+            </p>
+            <div class="main-button-red">
+              <div class="scroll-to-section">
+                <a href="#contact">Join Us Now!</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="services">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="owl-service-item owl-carousel">
+          <div class="item">
+            <div class="icon">
+              <img src="static/assets/images/service-icon-01.png" alt="" />
+            </div>
+            <div class="down-content">
+              <h4>Best Education</h4>
+              <p>
+                Suspendisse tempor mauris a sem elementum bibendum. Praesent
+                facilisis massa non vestibulum.
+              </p>
+            </div>
+          </div>
+
+          <div class="item">
+            <div class="icon">
+              <img src="static/assets/images/service-icon-02.png" alt="" />
+            </div>
+            <div class="down-content">
+              <h4>Best Teachers</h4>
+              <p>
+                Suspendisse tempor mauris a sem elementum bibendum. Praesent
+                facilisis massa non vestibulum.
+              </p>
+            </div>
+          </div>
+
+          <div class="item">
+            <div class="icon">
+              <img src="static/assets/images/service-icon-03.png" alt="" />
+            </div>
+            <div class="down-content">
+              <h4>Best Students</h4>
+              <p>
+                Suspendisse tempor mauris a sem elementum bibendum. Praesent
+                facilisis massa non vestibulum.
+              </p>
+            </div>
+          </div>
+
+          <div class="item">
+            <div class="icon">
+              <img src="static/assets/images/service-icon-02.png" alt="" />
+            </div>
+            <div class="down-content">
+              <h4>Online Meeting</h4>
+              <p>
+                Suspendisse tempor mauris a sem elementum bibendum. Praesent
+                facilisis massa non vestibulum.
+              </p>
+            </div>
+          </div>
+
+          <div class="item">
+            <div class="icon">
+              <img src="static/assets/images/service-icon-03.png" alt="" />
+            </div>
+            <div class="down-content">
+              <h4>Best Networking</h4>
+              <p>
+                Suspendisse tempor mauris a sem elementum bibendum. Praesent
+                facilisis massa non vestibulum.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section  class="upcoming-meetings" id="meetings">
+  <div class="container" style="margin-top:30px;">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="section-heading">
+          <h2>Upcoming Meetings</h2>
+        </div>
+      </div>
+        <div class="col-md-4">
+          <div class="categories"> 
+            <ul id="tree1">
+              <li><a href="#">+ Category</a>
+                  <ul>
+                    <li {% if not category %}class="selected"{% endif %} >
+                      <a href="{% url 'frontend:post_and_subcategory' %}">All</a>
+                    </li>
+                    <br>
+                      {% for cat in categories %}
+                      <li {% if category.slug == cat.slug %}class="selected"{% endif %}>
+                        <a href="{{ cat.get_absolute_url }}">{{ cat.title }}</a>
+                        <ul>
+                          {% for subcat in cat.subcats.all %}
+                          <li{% if category.slug == subcat.slug %}class="selected"{% endif %}>
+                            <a href="{{ subcat.get_absolute_url }}">{{ subcat.title }}</a>
+                          </li>
+                          {% endfor %}
+                        </ul>
+                      </li>
+                      {% endfor %} 
+                      <br>
+                  </ul>
+              </li>
+            </ul>
+          </div>
+          
+        </div>
+        <div class="col-lg-8">
+          <div class="row">   
+          {% for post in posts %}
+            <div class="col-lg-6">
+              <div class="meeting-item">
+                <div class="thumb">
+                  <a href="{{ post.get_absolute_url }}"
+                    ><img
+                      src="{{ post.banner.url }}"
+                      alt="New Lecturer Meeting"
+                  /></a>
+                </div>
+                <div class="down-content">
+                  <div class="date">
+                       <h6>{{ post.created|date:"M" }} <span>{{ post.created|date:"d" }}</span></h6>
+                  </div>     
+               <a href="{{ post.get_absolute_url }}"><h4 class='mt-4'>{{ post.title}}</h4></a>
+                  <br />
+                  <p class="mb-2">{{ post.content|truncatechars:20}}</p>
+                </div>
+              </div>
+            </div>
+        {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+</section>
+
+
+<section class="apply-now" id="apply">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 align-self-center">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="item">
+              <h3>APPLY FOR BACHELOR DEGREE</h3>
+              <p>
+                You are allowed to use this edu meeting CSS template for your
+                school or university or business. You can feel free to modify or
+                edit this layout.
+              </p>
+              <div class="main-button-red">
+                <div class="scroll-to-section">
+                  <a href="#contact">Join Us Now!</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <div class="item">
+              <h3>APPLY FOR BACHELOR DEGREE</h3>
+              <p>
+                You are not allowed to redistribute the template ZIP file on any
+                other template website. Please contact us for more information.
+              </p>
+              <div class="main-button-yellow">
+                <div class="scroll-to-section">
+                  <a href="#contact">Join Us Now!</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="accordions is-first-expanded">
+          <article class="accordion">
+            <div class="accordion-head">
+              <span>About Edu Meeting HTML Template</span>
+              <span class="icon">
+                <i class="icon fa fa-chevron-right"></i>
+              </span>
+            </div>
+            <div class="accordion-body">
+              <div class="content">
+                <p>
+                  If you want to get the latest collection of HTML CSS templates
+                  for your websites, you may visit
+                  <a
+                    rel="nofollow"
+                    href="https://www.toocss.com/"
+                    target="_blank"
+                    >Too CSS website</a
+                  >. If you need a working contact form script, please visit
+                  <a href="https://templatemo.com/contact" target="_parent"
+                    >our contact page</a
+                  >
+                  for more info.
+                </p>
+              </div>
+            </div>
+          </article>
+          <article class="accordion">
+            <div class="accordion-head">
+              <span>HTML CSS Bootstrap Layout</span>
+              <span class="icon">
+                <i class="icon fa fa-chevron-right"></i>
+              </span>
+            </div>
+            <div class="accordion-body">
+              <div class="content">
+                <p>
+                  Etiam posuere metus orci, vel consectetur elit imperdiet eu.
+                  Cras ipsum magna, maximus at semper sit amet, eleifend eget
+                  neque. Nunc facilisis quam purus, sed vulputate augue interdum
+                  vitae. Aliquam a elit massa.<br /><br />
+                  Nulla malesuada elit lacus, ac ultricies massa varius sed.
+                  Etiam eu metus eget nibh consequat aliquet. Proin fringilla,
+                  quam at euismod porttitor, odio odio tempus ligula, ut feugiat
+                  ex erat nec mauris. Donec viverra velit eget lectus
+                  sollicitudin tincidunt.
+                </p>
+              </div>
+            </div>
+          </article>
+          <article class="accordion">
+            <div class="accordion-head">
+              <span>Please tell your friends</span>
+              <span class="icon">
+                <i class="icon fa fa-chevron-right"></i>
+              </span>
+            </div>
+            <div class="accordion-body">
+              <div class="content">
+                <p>
+                  Ut vehicula mauris est, sed sodales justo rhoncus eu. Morbi
+                  porttitor quam velit, at ullamcorper justo suscipit sit amet.
+                  Quisque at suscipit mi, non efficitur velit.<br /><br />
+                  Cras et tortor semper, placerat eros sit amet, porta est.
+                  Mauris porttitor sapien et quam volutpat luctus. Nullam
+                  sodales ipsum ac neque ultricies varius.
+                </p>
+              </div>
+            </div>
+          </article>
+          <article class="accordion last-accordion">
+            <div class="accordion-head">
+              <span>Share this to your colleagues</span>
+              <span class="icon">
+                <i class="icon fa fa-chevron-right"></i>
+              </span>
+            </div>
+            <div class="accordion-body">
+              <div class="content">
+                <p>
+                  Maecenas suscipit enim libero, vel lobortis justo condimentum
+                  id. Interdum et malesuada fames ac ante ipsum primis in
+                  faucibus.<br /><br />
+                  Sed eleifend metus sit amet magna tristique, posuere laoreet
+                  arcu semper. Nulla pellentesque ut tortor sit amet maximus. In
+                  eu libero ullamcorper, semper nisi quis, convallis nisi.
+                </p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="our-courses" id="courses">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="section-heading">
+          <h2>Our Popular Courses</h2>
+        </div>
+      </div>
+      <div class="col-lg-12">
+        <div class="owl-courses-item owl-carousel">
+          {% for post in postlists %}
+          <div class="item">
+            {% if post.banner %}
+            <a><img src="{{ post.banner.url }}" /> </a>
+            {% else %}
+            <a
+              ><img src="{% static '/assets/images/course-01.jpg' %}" alt="Course
+              One" /></a
+            >
+            {% endif %}
+            <div class="down-content">
+              <a href="{{ post.get_absolute_url }}"
+                ><h4>{{ post.title }}</h4></a
+              >
+
+              <div class="info">
+                <div class="row">
+                  <div class="col-8">
+                    <ul>
+                      <li><i class="fa fa-star"></i></li>
+                      <li><i class="fa fa-star"></i></li>
+                      <li><i class="fa fa-star"></i></li>
+                      <li><i class="fa fa-star"></i></li>
+                      <li><i class="fa fa-star"></i></li>
+                    </ul>
+                  </div>
+                  <div class="col-4">
+                    <span>{{ post.created|date:"M-d"}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="our-facts">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="row">
+          <div class="col-lg-12">
+            <h2>A Few Facts About Our University</h2>
+          </div>
+          <div class="col-lg-6">
+            <div class="row">
+              <div class="col-12">
+                <div class="count-area-content percentage">
+                  <div class="count-digit">94</div>
+                  <div class="count-title">Succesed Students</div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="count-area-content">
+                  <div class="count-digit">126</div>
+                  <div class="count-title">Current Teachers</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="row">
+              <div class="col-12">
+                <div class="count-area-content new-students">
+                  <div class="count-digit">2345</div>
+                  <div class="count-title">New Students</div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="count-area-content">
+                  <div class="count-digit">32</div>
+                  <div class="count-title">Awards</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 align-self-center">
+        <div class="video">
+          <a href="https://www.youtube.com/watch?v=HndV87XpkWg" target="_blank"
+            ><img src="assets/images/play-icon.png" alt=""
+          /></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact-us" id="contact">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-9 align-self-center">
+        <div class="row">
+          <div class="col-lg-12" id="contact">
+            <h2>About Us</h2>
+            <div class="row g-4 row-cols-1 row-cols-lg-8">
+              <div class="feature-icon">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  x="0px"
+                  y="0px"
+                  width="70"
+                  height="70"
+                  viewBox="0 0 171 171"
+                  style="fill: #000000"
+                >
+                  <g
+                    fill="none"
+                    fill-rule="nonzero"
+                    stroke="none"
+                    stroke-width="1"
+                    stroke-linecap="butt"
+                    stroke-linejoin="miter"
+                    stroke-miterlimit="10"
+                    stroke-dasharray=""
+                    stroke-dashoffset="0"
+                    font-family="none"
+                    font-weight="none"
+                    font-size="none"
+                    text-anchor="none"
+                    style="mix-blend-mode: normal"
+                  >
+                    <path
+                      d="M0,171.98863v-171.98863h171.98863v171.98863z"
+                      fill="#e74c3c"
+                    ></path>
+                    <g>
+                      <path
+                        d="M46.3125,21.375c0,7.125 17.8125,10.6875 28.5,10.6875c10.6875,0 32.0625,-17.8125 14.25,-17.8125c-17.8125,0 -28.5,7.125 -42.75,7.125z"
+                        fill="#ffca28"
+                      ></path>
+                      <path
+                        d="M146.0625,142.49288c0.66619,-29.94281 -42.74287,-39.18394 -42.74287,-39.18394h-35.625c0,0 -42.78919,8.3505 -42.75712,39.18394l0.00712,10.69463h121.125z"
+                        fill="#738d99"
+                      ></path>
+                      <path
+                        d="M67.6875,103.30894h35.625l-14.25,49.87856h-7.125z"
+                        fill="#ffffff"
+                      ></path>
+                      <path
+                        d="M67.6875,103.3125v-17.8125h35.625v17.8125l-10.6875,7.125h-14.25zM124.6875,64.125c0,3.93656 -3.18844,7.125 -7.125,7.125c-3.933,0 -7.125,-3.18844 -7.125,-7.125c0,-3.93656 3.192,-7.125 7.125,-7.125c3.93656,0 7.125,3.18844 7.125,7.125M60.5625,64.125c0,-3.93656 -3.18844,-7.125 -7.125,-7.125c-3.93656,0 -7.125,3.18844 -7.125,7.125c0,3.93656 3.18844,7.125 7.125,7.125c3.93656,0 7.125,-3.18844 7.125,-7.125"
+                        fill="#fb8c00"
+                      ></path>
+                      <path
+                        d="M117.5625,39.1875h-64.125v32.0625c0,15.73913 12.76087,28.5 28.5,28.5h7.125c15.73913,0 28.5,-12.76087 28.5,-28.5z"
+                        fill="#ffa726"
+                      ></path>
+                      <path
+                        d="M49.88213,49.875v8.14388l7.125,6.10612c0,0 0,-3.5625 0,-14.25c0,-10.6875 15.09075,-14.25 33.95063,-14.25c11.77763,0 20.15663,4.38188 20.15663,4.38188c0,0 2.88562,2.74312 2.88562,9.86812c0,3.5625 0,14.25 0,14.25l7.13213,-6.20588v-8.04412c0,-14.25 -9.36581,-21.375 -29.87156,-21.375c-15.39,0 -41.37844,1.81687 -41.37844,21.375z"
+                        fill="#ffca28"
+                      ></path>
+                      <path
+                        d="M78.375,67.6875h-10.6875c0,-1.96294 2.394,-3.5625 5.34375,-3.5625c2.94975,0 5.34375,1.59956 5.34375,3.5625M103.3125,67.6875c0,-1.96294 -2.394,-3.5625 -5.34375,-3.5625c-2.94975,0 -5.34375,1.59956 -5.34375,3.5625h10.6875"
+                        fill="#37474f"
+                      ></path>
+                      <path
+                        d="M73.03125,57c-2.94975,0 -8.90625,3.5625 -8.90625,3.5625c0,0 3.55181,0 7.125,0c3.57319,0 7.125,0 7.125,0c0,-1.96294 -2.394,-3.5625 -5.34375,-3.5625zM97.96875,57c-2.94975,0 -5.34375,1.59956 -5.34375,3.5625c0,0 3.59456,0 7.125,0c3.53044,0 7.125,0 7.125,0c0,0 -5.9565,-3.5625 -8.90625,-3.5625z"
+                        fill="#ffd54f"
+                      ></path>
+                      <path
+                        d="M89.0625,117.5625h-7.125l-3.29531,24.09675l3.29531,11.52825h7.125l3.29531,-11.52825zM78.375,110.4375l3.5625,7.125h7.125l3.5625,-7.125z"
+                        fill="#f44336"
+                      ></path>
+                      <path
+                        d="M39.1875,32.0625c0,7.125 18.62119,17.8125 44.67731,17.8125c28.97381,0 37.26019,-8.45737 37.26019,-17.8125c0,-7.03594 -4.89844,-17.8125 -35.625,-17.8125c-14.25,0 -35.625,17.8125 -46.3125,17.8125z"
+                        fill="#ffd54f"
+                      ></path>
+                      <path
+                        d="M92.625,96.1875c0,3.93656 -3.18844,7.125 -7.125,7.125c-3.933,0 -7.125,-3.18844 -7.125,-7.125c0,-3.93656 3.192,-7.125 7.125,-7.125c3.93656,0 7.125,3.18844 7.125,7.125"
+                        fill="#ffa726"
+                      ></path>
+                      <path
+                        d="M78.375,85.5h14.25c0,3.16706 -3.5625,4.74881 -3.5625,4.74881h-7.125c0,0 -3.5625,-1.58175 -3.5625,-4.74881z"
+                        fill="#f57c00"
+                      ></path>
+                      <path
+                        d="M90.84375,92.625h-10.6875c0,-3.16706 2.67188,-4.74881 2.67188,-4.74881h5.34375c0,0 2.67188,1.58175 2.67188,4.74881z"
+                        fill="#f57c00"
+                      ></path>
+                    </g>
+                  </g>
+                </svg>
+              </div>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+                sunt in culpa qui officia deserunt mollit anim id est laborum.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+                sunt in culpa qui officia deserunt mollit anim id est laborum.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3">
+        <div class="right-info">
+          <ul>
+            <li>
+              <h6>Team us</h6>
+              <span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  x="0px"
+                  y="0px"
+                  width="48"
+                  height="48"
+                  viewBox="0 0 171 171"
+                  style="fill: #000000"
+                >
+                  <g
+                    fill="none"
+                    fill-rule="nonzero"
+                    stroke="none"
+                    stroke-width="1"
+                    stroke-linecap="butt"
+                    stroke-linejoin="miter"
+                    stroke-miterlimit="10"
+                    stroke-dasharray=""
+                    stroke-dashoffset="0"
+                    font-family="none"
+                    font-weight="none"
+                    font-size="none"
+                    text-anchor="none"
+                    style="mix-blend-mode: normal"
+                  >
+                    <path
+                      d="M0,171.98863v-171.98863h171.98863v171.98863z"
+                      fill="#e74c3c"
+                    ></path>
+                    <g>
+                      <path
+                        d="M46.3125,21.375c0,7.125 17.8125,10.6875 28.5,10.6875c10.6875,0 32.0625,-17.8125 14.25,-17.8125c-17.8125,0 -28.5,7.125 -42.75,7.125z"
+                        fill="#ffca28"
+                      ></path>
+                      <path
+                        d="M146.0625,142.49288c0.66619,-29.94281 -42.74287,-39.18394 -42.74287,-39.18394h-35.625c0,0 -42.78919,8.3505 -42.75712,39.18394l0.00712,10.69463h121.125z"
+                        fill="#738d99"
+                      ></path>
+                      <path
+                        d="M67.6875,103.30894h35.625l-14.25,49.87856h-7.125z"
+                        fill="#ffffff"
+                      ></path>
+                      <path
+                        d="M67.6875,103.3125v-17.8125h35.625v17.8125l-10.6875,7.125h-14.25zM124.6875,64.125c0,3.93656 -3.18844,7.125 -7.125,7.125c-3.933,0 -7.125,-3.18844 -7.125,-7.125c0,-3.93656 3.192,-7.125 7.125,-7.125c3.93656,0 7.125,3.18844 7.125,7.125M60.5625,64.125c0,-3.93656 -3.18844,-7.125 -7.125,-7.125c-3.93656,0 -7.125,3.18844 -7.125,7.125c0,3.93656 3.18844,7.125 7.125,7.125c3.93656,0 7.125,-3.18844 7.125,-7.125"
+                        fill="#fb8c00"
+                      ></path>
+                      <path
+                        d="M117.5625,39.1875h-64.125v32.0625c0,15.73913 12.76087,28.5 28.5,28.5h7.125c15.73913,0 28.5,-12.76087 28.5,-28.5z"
+                        fill="#ffa726"
+                      ></path>
+                      <path
+                        d="M49.88213,49.875v8.14388l7.125,6.10612c0,0 0,-3.5625 0,-14.25c0,-10.6875 15.09075,-14.25 33.95063,-14.25c11.77763,0 20.15663,4.38188 20.15663,4.38188c0,0 2.88562,2.74312 2.88562,9.86812c0,3.5625 0,14.25 0,14.25l7.13213,-6.20588v-8.04412c0,-14.25 -9.36581,-21.375 -29.87156,-21.375c-15.39,0 -41.37844,1.81687 -41.37844,21.375z"
+                        fill="#ffca28"
+                      ></path>
+                      <path
+                        d="M78.375,67.6875h-10.6875c0,-1.96294 2.394,-3.5625 5.34375,-3.5625c2.94975,0 5.34375,1.59956 5.34375,3.5625M103.3125,67.6875c0,-1.96294 -2.394,-3.5625 -5.34375,-3.5625c-2.94975,0 -5.34375,1.59956 -5.34375,3.5625h10.6875"
+                        fill="#37474f"
+                      ></path>
+                      <path
+                        d="M73.03125,57c-2.94975,0 -8.90625,3.5625 -8.90625,3.5625c0,0 3.55181,0 7.125,0c3.57319,0 7.125,0 7.125,0c0,-1.96294 -2.394,-3.5625 -5.34375,-3.5625zM97.96875,57c-2.94975,0 -5.34375,1.59956 -5.34375,3.5625c0,0 3.59456,0 7.125,0c3.53044,0 7.125,0 7.125,0c0,0 -5.9565,-3.5625 -8.90625,-3.5625z"
+                        fill="#ffd54f"
+                      ></path>
+                      <path
+                        d="M89.0625,117.5625h-7.125l-3.29531,24.09675l3.29531,11.52825h7.125l3.29531,-11.52825zM78.375,110.4375l3.5625,7.125h7.125l3.5625,-7.125z"
+                        fill="#f44336"
+                      ></path>
+                      <path
+                        d="M39.1875,32.0625c0,7.125 18.62119,17.8125 44.67731,17.8125c28.97381,0 37.26019,-8.45737 37.26019,-17.8125c0,-7.03594 -4.89844,-17.8125 -35.625,-17.8125c-14.25,0 -35.625,17.8125 -46.3125,17.8125z"
+                        fill="#ffd54f"
+                      ></path>
+                      <path
+                        d="M92.625,96.1875c0,3.93656 -3.18844,7.125 -7.125,7.125c-3.933,0 -7.125,-3.18844 -7.125,-7.125c0,-3.93656 3.192,-7.125 7.125,-7.125c3.93656,0 7.125,3.18844 7.125,7.125"
+                        fill="#ffa726"
+                      ></path>
+                      <path
+                        d="M78.375,85.5h14.25c0,3.16706 -3.5625,4.74881 -3.5625,4.74881h-7.125c0,0 -3.5625,-1.58175 -3.5625,-4.74881z"
+                        fill="#f57c00"
+                      ></path>
+                      <path
+                        d="M90.84375,92.625h-10.6875c0,-3.16706 2.67188,-4.74881 2.67188,-4.74881h5.34375c0,0 2.67188,1.58175 2.67188,4.74881z"
+                        fill="#f57c00"
+                      ></path>
+                    </g>
+                  </g>
+                </svg></span>
+              <span><small>Paragraph of text beneust</small></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <p>
+      Copyright © 2022 Edu Meeting Co., Ltd. All Rights Reserved. <br />Design:
+      <a
+        href="https://templatemo.com"
+        target="_parent"
+        title="free css templates"
+        >TemplateMo</a
+      >
+    </p>
+  </div>
+</section>
+
+{% endblock %}
+{% block scripts %}
+<script src="{% static '/assets/js/custom.js' %}"></script>
+{% comment %} <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script> {% endcomment %}
+{% comment %} <script src="//code.jquery.com/jquery-1.11.1.min.js"></script> {% endcomment %}
+<script>
+  $.fn.extend({
+    treed: function (o) {
+      
+      var openedClass = 'glyphicon-minus-sign';
+      var closedClass = 'glyphicon-plus-sign';
+      
+      if (typeof o != 'undefined'){
+        if (typeof o.openedClass != 'undefined'){
+        openedClass = o.openedClass;
+        }
+        if (typeof o.closedClass != 'undefined'){
+        closedClass = o.closedClass;
+        }
+      };
+      
+        //initialize each of the top levels
+        var tree = $(this);
+        tree.addClass("tree");
+        tree.find('li').has("ul").each(function () {
+            var branch = $(this); //li with children ul
+            branch.prepend("<i class='indicator glyphicon " + closedClass + "'></i>");
+            branch.addClass('branch');
+            branch.on('click', function (e) {
+                if (this == e.target) {
+                    var icon = $(this).children('i:first');
+                    icon.toggleClass(openedClass + " " + closedClass);
+                    $(this).children().children().toggle();
+                }
+            })
+            branch.children().children().toggle();
+        });
+        //fire event from the dynamically added icon
+      tree.find('.branch .indicator').each(function(){
+        $(this).on('click', function () {
+            $(this).closest('li').click();
+        });
+      });
+        //fire event to open branch if the li contains an anchor instead of text
+        tree.find('.branch>a').each(function () {
+            $(this).on('click', function (e) {
+                $(this).closest('li').click();
+                e.preventDefault();
+            });
+        });
+        //fire event to open branch if the li contains a button instead of text
+        tree.find('.branch>button').each(function () {
+            $(this).on('click', function (e) {
+                $(this).closest('li').click();
+                e.preventDefault();
+            });
+        });
+    }
+});
+
+//Initialization of treeviews
+
+$('#tree1').treed();
+
+$('#tree2').treed({openedClass:'glyphicon-folder-open', closedClass:'glyphicon-folder-close'});
+
+$('#tree3').treed({openedClass:'glyphicon-chevron-right', closedClass:'glyphicon-chevron-down'});
+
+</script>
+{% endblock %}
+
+{% comment %} https://bootsnipp.com/snippets/yplrV {% endcomment %}

@@ -1,0 +1,99 @@
+{% extends 'frontend/shared/home.html' %} {% block body %}
+
+<section class="heading-page header-text" id="top">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <h6>Get all details</h6>
+        <h2>Online Teaching and Learning Tools</h2>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="contact-us" id="contact">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-9 align-self-center">
+        <div class="row">
+          <div class="col-lg-12">
+            {% if messages %}
+            <div
+              class="alert alert-success alert-dismissible fade show"
+              role="alert"
+            >
+              {% for m in messages %}
+              <button
+                type="button"
+                class="btn-close btn-sm"
+                data-bs-dismiss="alert"
+                aria-label="Close"
+              ></button>
+              <div
+                {%
+                if
+                message.categoryies
+                %}
+                class="{{ message.categoryies }}"
+                {%
+                endif
+                %}
+              >
+                {{ m }}
+              </div>
+              {% endfor %}
+            </div>
+            {% endif %}
+            <form id="contact" action="" method="post" novalidate>
+              <div class="row">
+                <div class="col-lg-12">
+                  <h2>Let's get in touch</h2>
+                </div>
+
+                <div class="col-lg-12">
+                  <fieldset>
+                    
+                    {% csrf_token %} {% include 'backend/includes/form.html' %}
+                  </fieldset>
+                </div>
+                <div class="col-lg-12">
+                  <fieldset>
+                    <button type="submit" id="form-submit" class="button">
+                      SEND MESSAGE NOW
+                    </button>
+                  </fieldset>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3">
+        <div class="right-info">
+          <ul>
+            <li>
+              <h6>Phone Number</h6>
+              <span>010-020-0340</span>
+            </li>
+            <li>
+              <h6>Email Address</h6>
+              <span>info@meeting.edu</span>
+            </li>
+            <li>
+              <h6>Street Address</h6>
+              <span>Rio de Janeiro - RJ, 22795-008, Brazil</span>
+            </li>
+            <li>
+              <h6>Website URL</h6>
+              <span>www.meeting.edu</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <p>Copyright © 2022 Edu Meeting Co., Ltd. All Rights Reserved. 
+        <br>Design: <a href="https://templatemo.com" target="_parent" title="free css templates">TemplateMo</a></p>
+  </div>
+</section>
+{% endblock %}
