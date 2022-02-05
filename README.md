@@ -30,7 +30,7 @@ python manage.py createsuperuser
 python manage.py runserver
 
 
-![Screenshot_2022-02-02_20-01-16](https://user-images.githubusercontent.com/43889064/152201920-25397222-2ffd-47bf-8ffd-0081b2c7867e.png)
+![Screenshot from 2022-02-05 18-12-37](https://user-images.githubusercontent.com/43889064/152646537-9a54f6a1-a7fc-450b-9e92-d63565117b83.png)
 
 
 ![Screenshot_2022-02-02_20-02-20](https://user-images.githubusercontent.com/43889064/152206282-f4e908df-34dc-414f-9a86-0d786c42c388.png)
