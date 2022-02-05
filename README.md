@@ -21,13 +21,6 @@ docker-compose up
 ===============================
 
 
-python manage.py makemigrations
-
-python manage.py migrate
-
-python manage.py createsuperuser
-
-python manage.py runserver
 
 
 ![Screenshot from 2022-02-05 18-12-37](https://user-images.githubusercontent.com/43889064/152646537-9a54f6a1-a7fc-450b-9e92-d63565117b83.png)
