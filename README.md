@@ -38,3 +38,5 @@ python manage.py runserver
 
 ![Screenshot_2022-02-02_20-02-56](https://user-images.githubusercontent.com/43889064/152206386-aa825307-7104-4998-aa50-542af3b0393c.png)
 
+
+![Screenshot from 2022-02-05 17-32-50](https://user-images.githubusercontent.com/43889064/152645319-a530c03e-b889-4241-8fed-c4c603a50c56.png)
