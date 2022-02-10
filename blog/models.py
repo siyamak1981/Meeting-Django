@@ -7,7 +7,6 @@ from painless.models.managers import PostPublishedManager
 from tag.models import Tag
 from category.models import SubCategory
 from painless.models.choices import PostStatus
-from django.utils import timezone
 
 
 
@@ -20,7 +19,6 @@ class Post(OrganizedMixin):
     banner = models.ImageField(upload_to = 'blog/%Y/%m/%d', null = True, blank = True)
     subcategory = models.ForeignKey(SubCategory, on_delete=models.PROTECT, related_name = 'posts')
     tag = models.ManyToManyField(Tag, related_name = 'post', null = True, blank = True)
-    published_at = models.DateTimeField(default=timezone.now())
     content = models.TextField()
 
     objects = models.Manager()

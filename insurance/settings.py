@@ -21,10 +21,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog.apps.BlogConfig',
+    'api.apps.ApiConfig',
     'category.apps.CategoryConfig',
     'tag.apps.TagConfig',
     'dashboard.apps.DashboardConfig',
     'accounts.apps.AccountsConfig',
+    'rest_framework',
     'widget_tweaks',
     'social_django',
     'users', 
@@ -63,7 +65,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'insurance.wsgi.application'
 
+REST_FRAMEWORK = {
 
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
 
 
 DATABASES = {
@@ -125,7 +132,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'siyamak1981@gmail.com'
-EMAIL_HOST_PASSWORD = '*************'
+EMAIL_HOST_PASSWORD = 'poingshop@gmail.com'
 EMAIL_USE_TLS = True
 
 
