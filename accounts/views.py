@@ -1,14 +1,9 @@
 from django.contrib.auth import authenticate, login as auth_login
 from django.shortcuts import render, redirect
 from .forms import SignUpForm
-from django.shortcuts import  redirect
-from .forms import SignUpForm
-from django.shortcuts import redirect
-from django.utils.translation import gettext_lazy as _
-from .forms import SignUpForm
 from django.views.generic import TemplateView
 
-
+# import random
 
 def signup(request):
     if request.method == 'POST':

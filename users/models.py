@@ -1,6 +1,5 @@
 from painless.models.mixins import TimeStampedMixin
 from django.db import models
-from django.contrib.auth.models import User
 from django.utils.translation import gettext as _
 from django.templatetags.static import static
 from django.contrib.auth import get_user_model

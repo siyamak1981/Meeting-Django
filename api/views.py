@@ -1,20 +1,34 @@
 from rest_framework import generics
 from blog.models import Post
 from rest_framework import routers, serializers, viewsets
-from accounts.models import User
+from rest_framework.permissions import IsAdminUser
+from django.contrib.auth import get_user_model
 from api.serializers import UserSerializer,PostSerializer,TagSerializer,CategorySerializer, SubCategorySerializer,ProfileSerializer
 from tag.models import Tag
 from category.models import Category, SubCategory
 from users.models import Profile
+from .permissions import (
+	IsAuthorOrReadOnly, IsStaffOrReadOnly, IsSuperUserOrStaffReadOnly,UserIsOwnerOrReadOnly,IsActiveOrReadOnly
+)
 
+User = get_user_model()
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = (IsSuperUserOrStaffReadOnly,)
+    
 
 
 class APIProfileViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+
+    def get_permissions(self):
+        if self.action in ['list', 'create']:
+            permission_classes = [IsSuperUserOrStaffReadOnly]
+        else:
+            permission_classes = [IsActiveOrReadOnly, UserIsOwnerOrReadOnly,]
+        return [permission() for permission in permission_classes]
 
 
 class APIPostViewSet(viewsets.ModelViewSet):
@@ -22,6 +36,12 @@ class APIPostViewSet(viewsets.ModelViewSet):
     serializer_class = PostSerializer
     lookup_fiels = "pk"
     lookup_url_kwarg = "pk"  
+    def get_permissions(self):
+        if self.action in ['list', 'create']:
+            permission_classes = [IsStaffOrReadOnly]
+        else:
+            permission_classes = [IsStaffOrReadOnly, IsAuthorOrReadOnly]
+        return [permission() for permission in permission_classes]
 
 
 class APICategoryViewSet(viewsets.ModelViewSet):
@@ -29,12 +49,15 @@ class APICategoryViewSet(viewsets.ModelViewSet):
     serializer_class = CategorySerializer
     lookup_fiels = "pk"
     lookup_url_kwarg = "pk"  
+    permission_classes = (IsSuperUserOrStaffReadOnly,)
+
 
 class APISubCategoryViewSet(viewsets.ModelViewSet):
     queryset = SubCategory.objects.all()
     serializer_class = SubCategorySerializer
     lookup_fiels = "pk"
     lookup_url_kwarg = "pk"  
+    permission_classes = (IsSuperUserOrStaffReadOnly,)
 
 
 class APITagViewSet(viewsets.ModelViewSet):
@@ -42,8 +65,7 @@ class APITagViewSet(viewsets.ModelViewSet):
     serializer_class = TagSerializer
     lookup_fiels = "pk"
     lookup_url_kwarg = "pk"
-
-
+    permission_classes = (IsSuperUserOrStaffReadOnly,)
 
 
 
