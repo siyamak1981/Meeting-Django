@@ -52,6 +52,7 @@ class PostListView(LoginRequiredMixin, ListView):
 class PostCreateView(SuccessMessageMixin, LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostForm
+    context_object_name = "form"
     template_name = "backend/blog/create.html"
     success_url = reverse_lazy('blog:list')
     success_message = "Post Added Successfully!"

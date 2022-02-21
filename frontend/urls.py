@@ -1,6 +1,6 @@
 
 from django.urls import re_path
-from frontend import views
+from .import views
 from django.conf.urls.static import static
 from django.conf import settings
 

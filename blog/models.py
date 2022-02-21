@@ -18,7 +18,7 @@ class Post(OrganizedMixin):
     summary = models.CharField(max_length = 128)
     banner = models.ImageField(upload_to = 'blog/%Y/%m/%d', null = True, blank = True)
     subcategory = models.ForeignKey(SubCategory, on_delete=models.PROTECT, related_name = 'posts')
-    tag = models.ManyToManyField(Tag, related_name = 'post', null = True, blank = True)
+    tag = models.ManyToManyField(Tag, related_name = 'post',  blank = True)
     content = models.TextField()
 
     objects = models.Manager()

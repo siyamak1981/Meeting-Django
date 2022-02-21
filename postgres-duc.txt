@@ -15,11 +15,17 @@ docker container rm 2d8519db063d
 sudo service docker start
 sudo service --status-all | grep '+'
 sudo docker login
+##Docker postgres database
+docker-compose exec db psql --username=hello_django --dbname=hello_django_dev
+\c hello_django_dev
+\dt     ####list of relations
+   
 
 redis
 sudo systemctl status redis-server
 sudo systemctl start redis-server
 sudo systemctl stop redis-server
+sudo service redis-server stop
 
 github
 git remote add origin https://github.com/siyamak1981/Meeting-Django.git

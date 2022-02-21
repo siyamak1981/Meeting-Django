@@ -9,7 +9,7 @@ status = PostStatus(is_charfield=False)
 class TimeStampedMixin(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    published_at = models.DateTimeField(default=timezone.now())
+    published_at = models.DateTimeField(default=timezone.now)
     class Meta:
         abstract = True
 

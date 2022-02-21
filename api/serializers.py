@@ -16,6 +16,7 @@ from allauth.account.utils import setup_user_email
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
+    
     class Meta:
         model = User
         fields = ['url','pk', 'first_name', 'last_name', 'email', 'password', 'is_staff', 'is_active', 'is_superuser']
@@ -33,34 +34,35 @@ class TagSerializer(serializers.HyperlinkedModelSerializer):
             fields = ["url", "pk", "title", 'status', "created", "updated"]
 
 
-
 class CategorySerializer(serializers.HyperlinkedModelSerializer):
-       
         class Meta:
             model = Category
             fields = ["url", "pk", "title", "content", "banner", "created", "updated"]
 
+
 class SubCategorySerializer(serializers.HyperlinkedModelSerializer):
+        category = CategorySerializer()
         class Meta:
             model = SubCategory
             fields = ["url", "pk", "title", "content", "banner", "category"]
 
 
 class PostSerializer(serializers.ModelSerializer):
+    
+    def get_author(self, obj):
+        return {
+            "id":obj.author.id,
+            "first_name":obj.author.first_name,
+            "last_name":obj.author.last_name,
+            "email":obj.author.email,
+        }
+    author = serializers.SerializerMethodField("get_author")
+    # subcategory = SubCategorySerializer()
+    # tag = TagSerializer(many = True, required = True)
+    
     class Meta:
         model = Post
-        fields = ["url", "pk", "title", "status", "summary", "banner", "content", "author", "created", "updated", "published_at","subcategory", "tag"]
-        
-
-# class PostDetailSerializer(serializers.ModelSerializer):
-#     subcategory = SubCategorySerializer(required = True)
-#     author = UserSerializer(required = True)
-#     tag = TagSerializer(many = True, required = True)
-#     class Meta:
-#         model = Post
-#         fields = ["pk","title", "status", "summary", "banner", "content", "author", "created", "updated", "published_at","tag","subcategory"]
-
-
+        fields = ["url", "pk", "title", "status", "summary", "banner", "content", "subcategory", "author", "created", "updated", "published_at","subcategory", "tag"]
 
 
 class RegisterSerializer(serializers.Serializer):

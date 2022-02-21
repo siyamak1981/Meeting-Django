@@ -1,20 +1,27 @@
 
 
-from pathlib import Path
 import os
+from pathlib import Path
+from decouple import config, Csv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-rx8bm1hi_^n!_a_5&bjkx0p0du$x(a6ws7_46sk$zx@j8z7w+6'
+# SECRET_KEY = 'django-insecure-rx8bm1hi_^n!_a_5&bjkx0p0du$x(a6ws7_46sk$zx@j8z7w+6'
 
 
-DEBUG = True
+# DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = ['*']
 
+
+SECRET_KEY = config('SECRET_KEY')
+
+DEBUG = config('DEBUG', default=False, cast=bool)
+
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
 INSTALLED_APPS = [
-       'django.contrib.admin',
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -41,6 +48,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'dj_rest_auth.registration',
+
+    'django_filters',
 
     ]
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
@@ -80,16 +89,21 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'insurance.wsgi.application'
 
-REST_FRAMEWORK = {
 
+REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'api.permissions.IsStaffOrReadOnly',
     ],
       'DEFAULT_AUTHENTICATION_CLASSES': (
         'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
-    )
- 
+    ),
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+        'rest_framework.filters.SearchFilter',
+        'rest_framework.filters.OrderingFilter',
+    ],
 }
+
 SITE_ID = 1
 REST_USE_JWT = True
 JWT_AUTH_COOKIE = 'access'
@@ -98,6 +112,7 @@ JWT_AUTH_REFRESH_COOKIE = 'refresh'
 REST_AUTH_REGISTER_SERIALIZERS = {
         'REGISTER_SERIALIZER': 'api.serializers.RegisterSerializer',
 }
+
 
 
 DATABASES = {
@@ -155,13 +170,12 @@ STATICFILES_DIRS = (
 )
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = config('EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'siyamak1981@gmail.com'
 EMAIL_HOST_PASSWORD = 'poingshop@gmail.com'
-EMAIL_USE_TLS = True
-
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
 
 
 INTERNAL_IPS = [
@@ -182,10 +196,8 @@ CACHES = {
    }
 }
 
-RECAPTCHA_PUBLIC_KEY = "6LeEmKIUAAAAAKclnIuImbw4E_Y0iDAltG9bm5AZ"
-RECAPTCHA_PRIVATE_KEY = "6LeEmKIUAAAAADEW2CHFkhoLQpbOkxMs1Ww-WKAL"
-
-
+RECAPTCHA_PUBLIC_KEY = config("RECAPTCHA_PUBLIC_KEY",default="")
+RECAPTCHA_PRIVATE_KEY = config("RECAPTCHA_PRIVATE_KEY",default="")
 
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.google.GoogleOAuth2',
@@ -193,7 +205,6 @@ AUTHENTICATION_BACKENDS = (
 )
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '549418161873-vunmslj02haoovb8r9imscaoa2kad4sc.apps.googleusercontent.com' # Google Consumer Key
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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' # Google Consumer Secret
-LOGIN_URL = '/auth/login/google-oauth2/'
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
 LOGIN_REDIRECT_URL = "dashboard:home"  

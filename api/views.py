@@ -17,6 +17,7 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     permission_classes = (IsSuperUserOrStaffReadOnly,)
     
+    
 
 
 class APIProfileViewSet(viewsets.ModelViewSet):
@@ -36,6 +37,10 @@ class APIPostViewSet(viewsets.ModelViewSet):
     serializer_class = PostSerializer
     lookup_fiels = "pk"
     lookup_url_kwarg = "pk"  
+    filterset_fields = ['status','author__first_name']
+    ordering_fields = ["status", "published_at"]
+    ordering = ['-published_at']
+    search_fields = ["title", "content", "author__first_name", "author__last_name"]
     def get_permissions(self):
         if self.action in ['list', 'create']:
             permission_classes = [IsStaffOrReadOnly]
