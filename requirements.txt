@@ -43,3 +43,4 @@ django-filter
 dj_rest_auth
 django-allauth
 djangorestframework-simplejwt
+django-decouple==2.0

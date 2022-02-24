@@ -27,4 +27,9 @@ class DashboardPostListTest(MyAccountTestCase):
         view = resolve('/blog/list/')
         self.assertEquals(view.func.view_class, PostListView)
     
+    def test_post_page_template(self):
+        url = reverse('blog:list')
+        self.response = self.client.get(url)
+        self.assertTemplateUsed(self.response, 'backend/blog/list.html')
+    
 

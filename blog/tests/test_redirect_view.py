@@ -1,3 +1,4 @@
+
 import urllib.parse
 from django.urls import reverse,resolve
 from django.test import TestCase, testcases
@@ -23,3 +24,5 @@ class BlogPostTests(TestCase):
         expected_url = reverse('login') + "?next=" + urllib.parse.quote(reverse('blog:list'), "")
         self.assertRedirects(response, expected_url, status_code=302, target_status_code=200)
 
+
+    

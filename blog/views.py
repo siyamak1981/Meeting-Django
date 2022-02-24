@@ -99,7 +99,7 @@ class PostDeleteView(SuccessMessageMixin, PermissionRequiredMixin, DeleteView):
         return redirect('backend/blog/list.html')
 
 
-class PostUpdateView(SuccessMessageMixin, UpdateView):
+class PostUpdateView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
 
     def handle_no_permission(self):
         messages.warning(

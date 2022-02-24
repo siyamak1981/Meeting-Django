@@ -15,8 +15,4 @@ class FrontPageTests(TestCase):
         view = resolve('/frontend/')
         self.assertEquals(view.func, post_subcategory_list)
 
-# def test_logged_user_get_details(self):
-#     response = self.client.get(reverse('details', args=(1,)), follow=True)    # for first object
-#     self.assertEqual(response.status_code, 200)
-#     response = self.client.get(reverse('details', args=(5,)), follow=True)    # for second object
-#     self.assertEqual(response.status_code, 200)
+   
