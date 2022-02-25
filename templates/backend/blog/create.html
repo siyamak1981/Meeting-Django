@@ -1,5 +1,5 @@
 {% extends "backend/layouts/base.html" %} {% block title %}Create Tag
-{%endblock%} {% block stylesheets %}{% endblock stylesheets %} {% block content%}
+{%endblock%} {% block stylesheets %}{% endblock stylesheets %} {% block content %}
 
 <div class="py-4">
   <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
@@ -120,7 +120,8 @@
           <div class="row">
             <div class="col-lg-12">
               <label>content</label>
-              <textarea class="form-control" name="content" rows="6"></textarea>
+              <textarea name="content" id="content" class="form-control">&lt;p&gt;Initial editor content.&lt;/p&gt;</textarea>
+
               {% for error in form.errors.content %}
               <p class="text-danger">{{ error }}</p>
               {% endfor %}
@@ -201,4 +202,10 @@
 </div>
 
 {% endblock content %}
- {% block javascripts %} {% endblock javascripts %}
+ {% block javascripts %} 
+<script src="https://cdn.ckeditor.com/4.17.2/standard/ckeditor.js"></script>
+ 
+ <script>
+  CKEDITOR.replace( 'content' );
+</script>
+{% endblock javascripts %}

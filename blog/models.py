@@ -7,7 +7,7 @@ from painless.models.managers import PostPublishedManager
 from tag.models import Tag
 from category.models import SubCategory
 from painless.models.choices import PostStatus
-
+from ckeditor.fields import RichTextField
 
 
 status = PostStatus(is_charfield = False)
@@ -19,7 +19,7 @@ class Post(OrganizedMixin):
     banner = models.ImageField(upload_to = 'blog/%Y/%m/%d', null = True, blank = True)
     subcategory = models.ForeignKey(SubCategory, on_delete=models.PROTECT, related_name = 'posts')
     tag = models.ManyToManyField(Tag, related_name = 'post',  blank = True)
-    content = models.TextField()
+    content = RichTextField(blank=True,null=True)
 
     objects = models.Manager()
     condition = PostPublishedManager()

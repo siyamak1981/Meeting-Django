@@ -1,8 +1,9 @@
 from django import forms
 from blog.models import Post
-
-
+from ckeditor.fields import RichTextField
+from ckeditor.widgets import CKEditorWidget
 class PostForm(forms.ModelForm):
+    content = forms.CharField(widget=CKEditorWidget())
     class Meta:
         model = Post
         exclude=("slug",)

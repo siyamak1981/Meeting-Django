@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'api.apps.ApiConfig',
     'category.apps.CategoryConfig',
     'tag.apps.TagConfig',
+    'contact',
     'dashboard.apps.DashboardConfig',
     'accounts.apps.AccountsConfig',
     'rest_framework',
@@ -38,7 +39,8 @@ INSTALLED_APPS = [
     'social_django',
     'users', 
     'debug_toolbar',
-    'contact',
+    'ckeditor',
+    'django.contrib.sitemaps',
     
     'rest_framework.authtoken',
     'dj_rest_auth',
