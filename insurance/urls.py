@@ -13,6 +13,7 @@ urlpatterns = [
     re_path(r'^', include('accounts.urls',namespace='accounts')),
     re_path(r'^admin/', admin.site.urls),
     re_path(r'^blog/', include('blog.urls')),
+    re_path(r'^search/', include('search.urls')),
     re_path(r'^dashboard/', include('dashboard.urls')),
     re_path(r'^tag/', include('tag.urls')),
     re_path(r'^category/', include('category.urls')),
@@ -45,9 +46,9 @@ urlpatterns = [
     re_path(r'^settings/password/done/$',
         auth_views.PasswordChangeDoneView.as_view(template_name='backend/accounts/password_change_done.html'),
         name='password_change_done'),
+    re_path(r'^.*\.*', views.pages, name='pages'),
    
 
-    re_path(r'^.*\.*', views.pages, name='pages'),
     
     
     

@@ -163,10 +163,13 @@
               <div class="meeting-item">
                 <div class="thumb">
                   <a href="{{ post.get_absolute_url }}"
-                    ><img
+                    >
+                    {% if post.banner %}<img
                       src="{{ post.banner.url }}"
                       alt="New Lecturer Meeting"
-                  /></a>
+                  />
+                  {% endif %}
+                </a>
                 </div>
                 <div class="down-content">
                   <div class="date">

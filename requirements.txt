@@ -45,3 +45,6 @@ django-allauth
 djangorestframework-simplejwt
 django-decouple==2.0
 django-ckeditor
+elasticsearch==7.16.2
+elasticsearch-dsl>=7.0.0,<8.0.0
+django-elasticsearch-dsl==7.2.2
