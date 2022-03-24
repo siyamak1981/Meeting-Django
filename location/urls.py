@@ -9,5 +9,4 @@ app_name = "location"
 urlpatterns = [
     re_path(r'^map/', map_views.index, name = "map"),
   
-
 ]
