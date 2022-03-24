@@ -55,6 +55,8 @@ INSTALLED_APPS = [
     
     'search.apps.SearchConfig',
     'django_elasticsearch_dsl',
+
+    'location',
  
     ]
 
@@ -238,3 +240,5 @@ ELASTICSEARCH_DSL = {
         'hosts': os.getenv("ELASTICSEARCH_DSL_HOSTS", 'localhost:9200')
     },
 }
+
+GOOGLE_MAPS_API_KEY = os.environ.get('GOOGLE_MAPS_API_KEY')

@@ -48,3 +48,15 @@ django-ckeditor
 elasticsearch==7.16.2
 elasticsearch-dsl>=7.0.0,<8.0.0
 django-elasticsearch-dsl==7.2.2
+
+
+branca==0.4.2
+decorator==5.1.1
+folium==0.12.1.post1
+future==0.18.2
+geocoder==1.38.1
+Jinja2==3.0.3
+MarkupSafe==2.1.1
+ratelim==0.1.6
+
+
