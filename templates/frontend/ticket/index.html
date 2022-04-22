@@ -1,0 +1,39 @@
+{% extends 'frontend/shared/home.html' %} {% load static %}
+{% block styles %}
+{% endblock %}
+{% block title %}Landing
+{% endblock title %}
+{% block body %}
+<div class="container">
+    <br>
+    <div class="list-group">
+    {% if messages %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {% for m in messages %}
+        <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+        <div {% if message.posts %} class="{{ message.post }}" {% endif %}>{{ m }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+       
+        <li class="list-group-item rectangle-link">
+            <a href="{% url 'tickets:ticket_all_queue' %}"><button type="button" class="btn btn-primary">همه تیکتها
+                    </button></a>
+        </li>
+        <li class="list-group-item rectangle-link">
+            <a href="{% url 'tickets:ticket_created_queue' %}"><button type="button" class="btn btn-warning">توسط خودم ثبت شد</button></a>
+        </li>
+        <li class="list-group-item rectangle-link">
+            <a href="{% url 'tickets:ticket_recent_queue' %}"><button type="button" class="btn btn-success">تیکتهای اخیر
+                     </button></a>
+        </li>
+        <li class="list-group-item rectangle-link">
+            <a href="{% url 'tickets:ticket_done_queue' %}"><button type="button" class="btn btn-info"> تیکتهای انجام شده
+                </button></a>
+        </li>
+    </div>
+    <br>
+</div>
+
+
+{% endblock %}

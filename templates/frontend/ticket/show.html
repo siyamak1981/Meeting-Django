@@ -1,0 +1,60 @@
+{% extends 'frontend/shared/home.html' %} {% load static %}
+{% block styles %}
+{% endblock %}
+{% block title %}Tickets
+{% endblock title %}
+{% block body %}
+<div class="container">
+    <br>
+
+    <br>
+
+    {% if ticket_list %}
+    <ul class="list-group">
+        {% for ticket in ticket_list %}
+        <li class="list-group-item">
+
+            <p ><a href="{{ ticket.get_absolute_url }}" style="color:brown">موضوع تیکت هست: {{ ticket.subject }} </a></p>
+           
+            <small>
+            {% if ticket.how_many_days_old > 0 %}
+                            {{ticket.how_many_days_old }}
+                            {% if ticket.how_many_days_old > 1 %}
+                            days ago.
+                            {% else %}
+                            day ago.
+                            {% endif %}
+                            {% else %}
+                            today.
+                            {% endif %}
+                            Assigned to {{ticket.user}}
+            </small>
+                        
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No tickets are available</p>
+    {% endif %}
+
+
+    <div class="text-center">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+            <a href="?page=1">⏮</a>
+            <a href="?page={{ page_obj.previous_page_number }}">⏪</a>
+            {% endif %}
+
+            {% if page_obj.has_next or page_obj.has_previous %}
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+            {% endif %}
+
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">⏩</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">⏭</a>
+            {% endif %}
+        </span>
+
+{% endblock %}

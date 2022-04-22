@@ -1,0 +1,16 @@
+{% extends 'frontend/shared/home.html' %} {% load static %}
+{% block styles %}
+{% endblock %}
+{% block title %}Tickets
+{% endblock title %}
+{% block body %}
+
+<div class="container">
+     
+    <form method='POST'> 
+        {% csrf_token %}
+        {% include 'backend/includes/form.html' %}
+        <input type='submit' value='Create' />
+    </form>
+</div>
+{% endblock %}

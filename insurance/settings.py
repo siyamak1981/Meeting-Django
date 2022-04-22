@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'django_elasticsearch_dsl',
 
     'location',
+    'tickets',
  
     ]
 
