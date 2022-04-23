@@ -12,4 +12,4 @@ class TicketEnvelopeForm(forms.ModelForm):
 class TicketLetterForm(forms.ModelForm):
     class Meta:
         model = TicketLetter
-        exclude = ('published_at',)
+        exclude = ('published_at', 'user')
