@@ -85,8 +85,8 @@
                     <svg class="icon icon-sm" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
                   </span>
                 </span>
-                <div class="multi-level collapse" role="list" id="submenu-contact" aria-expanded="false" style="">
-                  <ul class="flex-column nav">
+                <div class="multi-level collapse" role="list" id="submenu-contact" aria-expanded="false">
+                    <ul class="flex-column nav">
                     <li class="nav-item ">
                       <a class="nav-link"  href="{% url 'contact:list' %}">
                         <span class="sidebar-text">List</span>
@@ -178,7 +178,7 @@
                     <svg class="icon icon-sm" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
                   </span>
                 </span>
-                <div class="multi-level collapse" role="list" id="submenu-components" aria-expanded="false" style="">
+                <div class="multi-level collapse" role="list" id="submenu-components" aria-expanded="false" >
                   <ul class="flex-column nav">
                     <li class="nav-item ">
                       <a class="nav-link"  href="{% url 'category:list' %}">
@@ -205,7 +205,7 @@
                     <svg class="icon icon-sm" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
                   </span>
                 </span>
-                <div class="multi-level collapse" role="list" id="submenu-subcat" aria-expanded="false" style="">
+                <div class="multi-level collapse" role="list" id="submenu-subcat" aria-expanded="false" >
                   <ul class="flex-column nav">
                     <li class="nav-item ">
                       <a class="nav-link"  href="{% url 'subcategory:list' %}">
@@ -233,7 +233,7 @@
                     <svg class="icon icon-sm" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
                   </span>
                 </span>
-                <div class="multi-level collapse" role="list" id="submenu-blog" aria-expanded="false" style="">
+                <div class="multi-level collapse" role="list" id="submenu-blog" aria-expanded="false" >
                   <ul class="flex-column nav">
                     <li class="nav-item ">
                       <a class="nav-link"  href="{% url 'blog:list' %}">
@@ -266,26 +266,25 @@
                       </svg>
                     </span>
                   </span>
-                  <div class="multi-level collapse" role="list" id="submenu-ticket" aria-expanded="false" style="">
+                  <div class="multi-level collapse" role="list" id="submenu-ticket" aria-expanded="false" >
                     <ul class="flex-column nav">
                       <li class="nav-item ">
-                          {% if request.user.is_superuser %}
+                       
                           <a class="nav-link" href="{% url 'tickets:list' %}">
                           <span class="sidebar-text">Envelop</span>
-                        </a>{% endif %}
+                        </a>
                       </li>
-                          {% if request.user.is_active and not request.user.is_superuser %}
-                        <li class="nav-item ">
-                          <a class="nav-link" href="{% url 'tickets:ticket_created_by_user' %}">
-                            <span class="sidebar-text">Envelop By User</span>
-                          </a>
-                        {% endif %}
-                        </li>
+                    
                       <li class="nav-item ">
-                        <a class="nav-link" href="{% url 'tickets:create' %}">
+                        <a class="nav-link" href="{% url 'tickets:ticket_create' %}">
                           <span class="sidebar-text">Create</span>
                         </a>
                       </li>
+                        <li class="nav-item ">
+                          <a class="nav-link" href="{% url 'tickets:followup_new' %}">
+                            <span class="sidebar-text">Comments</span>
+                          </a>
+                        </li>
                     </ul>
                   </div>
                 </li>

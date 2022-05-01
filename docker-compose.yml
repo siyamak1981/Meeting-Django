@@ -3,8 +3,11 @@ services:
 
   # Redis
   redis:
+    restart: always
     image: redis:alpine
     container_name: redis
+    ports:
+      - 6379:6379
 
   # Database Postgres
   db:

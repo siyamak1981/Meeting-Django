@@ -1,15 +1,29 @@
 from django import forms
-from . models import TicketLetter,TicketEnvelope
+from . models import Ticket, FollowUp, Attachment
 
 
-class TicketEnvelopeForm(forms.ModelForm):
-    description = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Please enter the  description'}))
+class TicketCreateForm(forms.ModelForm):
     class Meta:
-        model = TicketEnvelope
-        exclude = ('published_at',)
+        model = Ticket
+        fields = ('title', 'description')
 
 
-class TicketLetterForm(forms.ModelForm):
+class TicketEditForm(forms.ModelForm):
     class Meta:
-        model = TicketLetter
-        exclude = ('published_at', 'user')
+        model = Ticket
+        fields = ('title', 'owner', 'description',
+                  'status', 'waiting_for', 'assigned_to')
+
+
+
+class FollowupForm(forms.ModelForm):
+
+    class Meta:
+        model = FollowUp
+        fields = ('ticket', 'title', 'text', 'user')
+
+
+class AttachmentForm(forms.ModelForm):
+    class Meta:
+        model = Attachment
+        fields = ('file','ticket', 'filename')

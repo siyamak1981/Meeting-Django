@@ -8,9 +8,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECRET_KEY = 'django-insecure-rx8bm1hi_^n!_a_5&bjkx0p0du$x(a6ws7_46sk$zx@j8z7w+6'
 
-
 # DEBUG = True
-
 # ALLOWED_HOSTS = ['*']
 
 
@@ -184,7 +182,7 @@ EMAIL_BACKEND = config('EMAIL_BACKEND', default='django.core.mail.backends.smtp.
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'siyamak1981@gmail.com'
-EMAIL_HOST_PASSWORD = '****************'
+EMAIL_HOST_PASSWORD = 'poingshop@gmail.com'
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
 
 
@@ -244,3 +242,6 @@ ELASTICSEARCH_DSL = {
 
 # GOOGLE_MAPS_API_KEY = os.environ.get('GOOGLE_MAPS_API_KEY')
 # GOOGLE_MAPS_API_KEY=AIzaSyAosgxc63Vzg0rPPulpvVrcl7NgQPX41UM
+
+
+

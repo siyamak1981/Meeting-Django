@@ -85,7 +85,7 @@ class SuccessfulPasswordChangeTests(PasswordChangeTestCase):
         '''
         response = self.client.get(reverse('dashboard:home'))
         user = response.context.get('user')
-        self.assertTrue(user.is_authenticated)
+        self.assertTrue(user.)
 
 
 class InvalidPasswordChangeTests(PasswordChangeTestCase):

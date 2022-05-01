@@ -1,91 +1,149 @@
-import uuid
+# -*- coding: utf-8 -*-
+from django.shortcuts import reverse
 from django.db import models
-from django.utils.translation import gettext as _
-from django.urls import reverse
-from django.core.validators import FileExtensionValidator
-from painless.models.mixins import TimeStampedMixin
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
-
-class TicketLetter(TimeStampedMixin):
-    uid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
-    title= models.CharField(_('title'),max_length=128)
-    description = models.TextField(max_length=1000,verbose_name=_('Message'))
-    user = models.ForeignKey(User, on_delete = models.SET_NULL, related_name="ticket_letter_user", null = True , blank = True)
-    reply = models.ForeignKey('TicketEnvelope', on_delete = models.CASCADE, blank =True, null = True, related_name='letter_reply', verbose_name=_('Reply'))
-    ticket = models.ForeignKey('TicketEnvelope', on_delete = models.CASCADE, related_name='messages', verbose_name = _('Ticket'), blank = True, null = True)
-    
-    class Meta:
-        verbose_name = _('TicketLetters')
-        verbose_name_plural = _('TicketLetters')
-        ordering = ['-created']
-    
-    def __str__(self):
-        return "{}".format(self.user)
-
-    def get_absolute_url(self):
-        return reverse('tickets:detail', kwargs={"pk": self.pk})
+try:
+    from django.utils import timezone
+except ImportError:
+    from datetime import datetime as timezone
 
 
-class Department(TimeStampedMixin): #1 to many
-    title = models.CharField(max_length=50)
-    description = models.TextField(max_length=200, blank = True, null = True)
-
-    class Meta:
-        verbose_name = _('Department')
-        verbose_name_plural = _('Departments')
-    
-
-    def __str__(self):
-        return self.title
-   
+def user_unicode(self):
+    """
+    return 'last_name, first_name' for User by default
+    """
+    return u'%s, %s' % (self.last_name, self.first_name)
 
 
-class TicketEnvelope(TimeStampedMixin):
+User.__unicode__ = user_unicode
 
-    PRIORITY_CHOICES = (
-        ('Low','Low'),
-        ('Medium','Medium'),
-        ('High','High'),
-        ('Critical','Critical'),
-    )
+
+class Ticket(models.Model):
+
+    title = models.CharField('Title', max_length=255)
+
+    owner = models.ForeignKey(User,
+                              related_name='owner',
+                              blank=True,
+                              null=True,
+                              verbose_name='Owner', on_delete =
+                              models.CASCADE)
+
+    description = models.TextField('Description', blank=True, null=True)
+
     STATUS_CHOICES = (
-        ('Backlog','Backlog'),
-        ('Waiting On Submitter','Waiting On Submitter'),
-        ('Progress','Progress'),
-        ('Done','Done'),
+        ('TODO', 'TODO'),
+        ('IN PROGRESS', 'IN PROGRESS'),
+        ('WAITING', 'WAITING'),
+        ('DONE', 'DONE'),
     )
-    uid = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
-    subject = models.CharField(max_length=128)
-    department = models.ForeignKey("Department", on_delete=models.CASCADE ,related_name="ticket")
-    priority = models.CharField(max_length=10,choices=PRIORITY_CHOICES, blank=True)
-    description = models.TextField(max_length=1000, verbose_name=_('Message'))
-    status = models.CharField(max_length=40, choices=STATUS_CHOICES, blank = True, null = True)
-    user = models.ForeignKey(User, on_delete = models.SET_NULL, blank = True, null = True, related_name='ticket_envelop_user', verbose_name=_('Ticket to'))
-    
+    status = models.CharField('Status',
+                              choices=STATUS_CHOICES,
+                              max_length=255,
+                              blank=True,
+                              null=True)
+
+    waiting_for = models.ForeignKey(User,
+                                    related_name='waiting_for',
+                                    blank=True,
+                                    null=True,
+                                    verbose_name='Waiting For' ,on_delete =
+                              models.CASCADE)
+
+    # set in view when status changed to "DONE"
+    closed_date = models.DateTimeField(blank=True, null=True)
+
+    assigned_to = models.ForeignKey(User,
+                                    related_name='assigned_to',
+                                    blank=True,
+                                    null=True,
+                                    verbose_name='Assigned to', on_delete =
+                              models.CASCADE)
+
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
     class Meta:
-        verbose_name = _('TicketEnvelop')
-        verbose_name_plural = _('TicketsEnvelops')
-        ordering = ['-created']
+        ordering = ['-created', ]
+
 
     def __str__(self):
-        return self.subject
-    
+        return str(self.title)
+
     def get_absolute_url(self):
-        return reverse('tickets:detail', kwargs={"pk": self.pk})
+        return reverse("tickets:ticket_detail", kwargs={"pk": self.pk })
+     
 
 
-class Attachment(models.Model): #1 to many
-    title = models.CharField(max_length=128)
-    attachment= models.FileField(upload_to='tickets', 
-                                        validators = [FileExtensionValidator(['docx', 'doc', 'pdf', 'png', 'gepg','jpg'])],
-                                        help_text = "supported file: doc, pdf, jpg, png and docx")
-    ticket = models.ForeignKey("TicketEnvelope", on_delete = models.CASCADE, related_name="attachments")
+class FollowUp(models.Model):
+    """
+    A FollowUp is a comment to a ticket.
+    """
+    ticket = models.ForeignKey(Ticket, verbose_name='Ticket', on_delete =
+                              models.CASCADE, related_name="tickets")
+    date = models.DateTimeField('Date', default=timezone.now)
+    title = models.CharField('Title', max_length=200,)
+    text = models.TextField('Text', blank=True, null=True,)
+    user = models.ForeignKey(User, blank=True, null=True, verbose_name='User', on_delete =
+                              models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
 
     class Meta:
-        verbose_name = "attachment"
-        verbose_name_plural = "attachments"
+        ordering = ['-modified', ]
+        verbose_name = 'Comment'
+        verbose_name_plural = 'Comments'
     
     def __str__(self):
         return self.title
+
+
+def attachment_path(instance, filename):
+    """
+    Provide a file path that will help prevent files being overwritten, by
+    putting attachments in a folder off attachments for ticket/followup_id/.
+    """
+    import os
+    from django.conf import settings
+    os.umask(0)
+    path = 'tickets/%s' % instance.ticket.id
+    print(path)
+    att_path = os.path.join(settings.MEDIA_ROOT, path)
+    if settings.DEFAULT_FILE_STORAGE == "django.core.files. \
+                                         storage.FileSystemStorage":
+        if not os.path.exists(att_path):
+            os.makedirs(att_path,)
+    return os.path.join(path, filename)
+
+
+class Attachment(models.Model):
+    ticket = models.ForeignKey(Ticket, verbose_name='Ticket', on_delete =
+                              models.CASCADE)
+
+    file = models.FileField('File',
+                            upload_to=attachment_path,
+                            max_length=1000)
+
+    filename = models.CharField('Filename', max_length=1000)
+
+    user = models.ForeignKey(User,
+                             blank=True,
+                             null=True,
+                             verbose_name='User', on_delete = models.CASCADE)
+
+    created = models.DateTimeField(auto_now_add=True)
+
+    def get_upload_to(self, field_attname):
+        """ Get upload_to path specific to this item """
+        if not self.id:
+            return u''
+        return u'../media/tickets/%s' % (
+            self.ticket.id,
+        )
+
+    class Meta:
+        ordering = ['filename', ]
+        verbose_name = 'Attachment'
+        verbose_name_plural = 'Attachments'

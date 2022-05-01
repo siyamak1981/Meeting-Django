@@ -469,8 +469,15 @@ a.list-group-item, .list-group-item-action {
                                     <td>{{ ticket.created }}</td>
                                     <td>{{ ticket.updated }}</td>
                                     <td>{{ ticket.department }}</td>
-                                    <td><span class="text-warning">{{ ticket.priority }}</span></td>
-                                    <td><span class="text-primary">{{ ticket.status }}</span></td>
+                                    <td><span class="text-success">{{ ticket.priority }}</span></td>
+                                    {% if ticket.status == 'Progress' %}
+                                        <td><span class="badge super-badge bg-warning">{{ ticket.status }}</span></td>
+                                    {% elif ticket.status == 'Waiting' %}
+                                        <td><span class="badge super-badge bg-danger">{{ ticket.status }}</span></td>
+                                    {% else %}
+                                        <td><span class="badge super-badge bg-success">{{ ticket.status }}</span></td>
+                                    {% endif %}
+                                   
                                 </tr>
                             </tbody>
                         </table>
@@ -478,25 +485,41 @@ a.list-group-item, .list-group-item-action {
                 <!-- Messages-->
                 {% if ticket_envelops %}
                 {% for ticket_envelop in ticket_envelops %}
+                {% for tickelet in ticket_envelop.messages.all %}
                 <div class="comment mt-5">
-                    {% for tickelet in ticket_envelop.messages.all %}
-                    <div class="comment-author-ava"><img src="{{ tickelet.user.profile.get_avatar }}" alt="Avatar"></div>
-                    <div class="comment-body">
-                        
-                        <p class="comment-text">{{ tickelet.description }}
+                    {% if tickelet.user.is_superuser  %}
+                        <div class="comment-author-ava"><img src="{{ tickelet.user.profile.get_avatar }}" alt="Avatar"></div>
+                        <div class="comment-body">
+                            <p class="comment-text">{{ tickelet.description }}
                             <div class="comment-footer"><span class="comment-meta">{{ tickelet.user.first_name }}</span></div>
+                            </p>
+                        </div>                 
+                    {% endif %}
+                  
+                </div>
+                
+                {% endfor %}
+                {% for tickelet in ticket_envelop.messages.all %}
+                <div class="comment mt-5">
+                    {% if not tickelet.user.is_superuser %}
+                    <div class="comment-body">
+                        <p class="comment-text">{{ tickelet.description }}
                         </p>
                     </div>
-                    {% endfor %}
-                </div>{% endfor %}
+                    {% endif %}
+                
+                </div>
+        
+                {% endfor %}
+                {% endfor %}
                 {% else %}
-                Ticket Does exists
+                    Ticket Does exists
                 {% endif %}
                   
                 
                     <!-- Reply Form-->
                     <h5 class="mb-30  mt-7 padding-top-1x">Leave Message</h5>
-                    <form action="#" method="POST" enctype="multipart/form-data">
+                    <form method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
                         {% include 'backend/includes/form.html' %}
     
