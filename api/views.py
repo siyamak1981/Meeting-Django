@@ -10,15 +10,14 @@ from users.models import Profile
 from .permissions import (
 	IsAuthorOrReadOnly, IsStaffOrReadOnly, IsSuperUserOrStaffReadOnly,UserIsOwnerOrReadOnly,IsActiveOrReadOnly
 )
-
 User = get_user_model()
+
+
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = (IsSuperUserOrStaffReadOnly,)
     
-    
-
 
 class APIProfileViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.all()
